@@ -18,3 +18,13 @@
  * ```
  * This problem should be solved by a self join on the "film_category" table.
  */
+
+select title from
+(select f2.title, count(f2.title)
+    from film f1 join film_category fc1 on f1.film_id=fc1.film_id
+    join film_category fc2 on fc1.category_id=fc2.category_id
+    join film f2 on f2.film_id=fc2.film_id
+    where f1.title = 'AMERICAN CIRCUS'
+    group by f2.title) t1
+where count>1
+order by title;
